@@ -11,26 +11,20 @@ On the first page of the website, the user will encounter two study tools. The s
 ### Dependencies
 
 * Used Replit to write code -online free website
-
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+* Used w3schools template for base of the project
 
 ### Executing program
 
 * How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
+* click on website link
+*buttons should allow user to toggle from page to page
+*navigation bar takes user to different sections of website
+
 
 ## Help
 
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
+*refresh page
+*restart device
 
 ## Authors
 
@@ -47,9 +41,11 @@ Vanessa Trinh
 
 * 0.2
     * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
+    * see commit change
 * 0.1
     * Initial Release
+    * did not meet authors definition of done 
+    * incomplete/ inefficient
 
 ## License
 
@@ -58,8 +54,6 @@ This project is licensed under the [NAME HERE] License - see the LICENSE.md file
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+*w3schools
+*study bloggers
+*study aesthetic images
