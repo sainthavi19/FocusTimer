@@ -1,75 +1,57 @@
-const timerContainer = document.querySelector(".timer");
-const startButton = document.querySelector(".start-button");
-const pauseButton = document.querySelector(".pause-button");
-const resetButton = document.querySelector(".reset-button");
-const breakContainer = document.querySelector(".break-container");
+var workTime = 25 * 60 * 1000; // 25 minutes in milliseconds
+        var breakTime = 5 * 60 * 1000; // 5 minutes in milliseconds
+        var timerId;
+        var startTime;
+        var remainingTime = workTime;
+        var isRunning = false;
+        var isBreak = false;
 
-let timeLeft = 1500; // 25 minutes in seconds
-let isTimerRunning = false;
-let timerInterval;
-let timebreak=300
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                startTime = Date.now();
+                timerId = setInterval(updateTimer, 1000);
+            }
+        }
 
-function startTimer() {
-  isTimerRunning = true;
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    updateTimerDisplay();
+        function stopTimer() {
+            if (isRunning) {
+                isRunning = false;
+                clearInterval(timerId);
+                remainingTime -= Date.now() - startTime;
+            }
+        }
 
-    if (timeLeft === 0) {
-      clearInterval(timerInterval);
-      isTimerRunning = false;
-      breakContainer.style.display = "block";
-    }
-  }, 1000);
-}
+        function resetTimer() {
+            stopTimer();
+            remainingTime = workTime;
+            isBreak = false;
+            updateDisplay();
+        }
 
-function breakTimer(){
-  isTimerRunning = true;
-  timerInterval = setInterval(() => {
-    timebreak--;
-    updateTimerDisplay();
+        function updateTimer() {
+            var elapsed = Date.now() - startTime;
+            remainingTime = isBreak ? breakTime - elapsed : workTime - elapsed;
+            if (remainingTime <= 0) {
+                if (isBreak) {
+                    remainingTime = workTime;
+                    isBreak = false;
+                } else {
+                    remainingTime = breakTime;
+                    isBreak = true;
+                }
+                startTime = Date.now();
+            }
+            updateDisplay();
+        }
 
-    if (timebreak === 0) {
-      clearInterval(timerInterval);
-      isTimerRunning = false;
-      breakContainer.style.display = "block";
-    }
-  }, 1000);
-}
+        function updateDisplay() {
+            var minutes = Math.floor(remainingTime / 60000);
+            var seconds = Math.floor((remainingTime % 60000) / 1000);
+            var display = document.getElementById("display");
+            display.innerHTML = zeroPad(minutes) + ":" + zeroPad(seconds);
+        }
 
-function pauseTimer() {
-  clearInterval(timerInterval);
-  isTimerRunning = false;
-}
-
-function resetTimer() {
-  clearInterval(timerInterval);
-  isTimerRunning = false;
-  timeLeft = 1500;
-  updateTimerDisplay();
-  breakContainer.style.display = "none";
-}
-
-function updateTimerDisplay() {
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  const displayMinutes = minutes < 10 ? "0" + minutes : minutes;
-  const displaySeconds = seconds < 10 ? "0" + seconds : seconds;
-  timerContainer.textContent = `${displayMinutes}:${displaySeconds}`;
-}
-
-startButton.addEventListener("click", () => {
-  if (!isTimerRunning) {
-    startTimer();
-  }
-});
-
-pauseButton.addEventListener("click", () => {
-  if (isTimerRunning) {
-    pauseTimer();
-  }
-});
-
-resetButton.addEventListener("click", () => {
-  resetTimer();
-});
+        function zeroPad(num) {
+            return (num < 10 ? "0" : "") + num;
+        }
